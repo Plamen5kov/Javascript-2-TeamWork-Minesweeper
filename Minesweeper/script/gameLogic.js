@@ -17,11 +17,14 @@
         fieldLayer = new Kinetic.Layer(),
         minesLayer = new Kinetic.Layer();
 
+    // disable right click context menu over container DIV
+    document.getElementById('container').oncontextmenu = new Function("return false")
+
     InitGrid();
     setMines();
     setMineNumbers(field); //filling numbers around mines
 
-    var allMineFields = fieldLayer.get('.field');
+    var allMineFields = fieldLayer.get('.field');    
 
     stage.add(fieldLayer);
     stage.add(minesLayer);
