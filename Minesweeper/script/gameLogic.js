@@ -24,17 +24,18 @@
     setMines();
     setMineNumbers(field); //filling numbers around mines
 
-    var allMineFields = fieldLayer.get('.field');    
+    var allMineFields = fieldLayer.get('.field');
 
     stage.add(fieldLayer);
     stage.add(minesLayer);
 
     allMineFields.on('mousedown', function () {
+
         var x = this.getX() / fieldSize;
         var y = this.getY() / fieldSize;
 
         if (field[y][x] === ' ') {
-            //TODO: reveal all white spaces up to numbers
+            revealCell(x, y);
         }
         else if (field[y][x] === mine) {
             drawText(y, x, mine, 'red');
@@ -151,4 +152,40 @@
         minesLayer.add(mine);
         mine.draw();
     }
+
+    function revealCell(x, y) {
+        if (isInBounds(x, y)) {
+            var cellValue = field[y][x];
+            if (field[y][x] === "n" || field[y][x] === mine) {
+
+            }
+            else if (field[y][x] === " ") {
+                drawText(y, x, 'n', 'red')           
+                field[y][x] = "n";
+                revealNeighbouringEmptyCells(x, y);
+            }
+            else {
+                drawText(y, x, field[y][x], 'white');
+            }
+        }
+    }
+
+    function revealNeighbouringEmptyCells(x, y) {
+        revealCell(x - 1, y);
+        revealCell(x + 1, y);
+        revealCell(x, y + 1);
+        revealCell(x, y - 1);
+    };
+
+    function isInBounds(x, y) {
+        var isInside=false;
+        if (x >= 0 && x < cols) {
+            if (y >= 0 && y < rows) {
+                isInside=true;
+            }
+        }
+        return isInside;
+    }
+
+
 }
