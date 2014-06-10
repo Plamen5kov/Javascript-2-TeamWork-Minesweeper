@@ -26,10 +26,6 @@
         allMineFiled,
         canvasContainer = document.getElementById('container');
 
-    paper.image('imgs/kabum-background.jpg', 1, 0, windowWidth, windowHeight).attr({
-        opacity: 0.7
-    });
-
     canvasContainer.style.left = Math.round((windowWidth - stageWidth) / 2) + 'px';
     canvasContainer.style.top = Math.round(windowHeight / 2) + 'px';
 
@@ -213,6 +209,7 @@
     }
 
     function drawInfoBoard() {
+        var paper = new Raphael(10, 10, 250, 450);
         paper.rect(10, 10, 250, 450).attr({
             stroke: 'darkgrey',
             fill: 'darkgrey'
