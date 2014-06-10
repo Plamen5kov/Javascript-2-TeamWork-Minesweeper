@@ -1,0 +1,9 @@
+﻿body {
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+#container, #background {
+    position: absolute;
+}

@@ -1,25 +1,40 @@
 ﻿window.onload = function () {
-    var stageWidth = 300,
-        stageHeight = 300,
-        fieldSize = stageWidth / 10, // gives us scalable field ( when we change the stageWidth and stageHight the game scales correctly )
-        rows = stageHeight / fieldSize,
-        cols = stageWidth / fieldSize,
+    var rows = 10,
+        cols = 10,
+        fieldSize = 30,
+
+        stageWidth = cols * fieldSize,
+        stageHeight = rows * fieldSize,
 
         field = [],
         mine = 'X',
         emptyField = ' ',
+
+        windowWidth = window.innerWidth,
+        windowHeight = window.innerHeight,
+
+        paper = new Raphael("background", windowWidth - 5, windowHeight - 5),
 
         stage = new Kinetic.Stage({
             container: 'container',
             width: stageWidth,
             height: stageHeight
         }),
+
         fieldLayer = new Kinetic.Layer(),
         minesLayer = new Kinetic.Layer(),
-        allMineFiled;
+        allMineFiled,
+        canvasContainer = document.getElementById('container');
+
+    paper.image('imgs/kabum-background.jpg', 1, 0, windowWidth, windowHeight).attr({
+        opacity: 0.7
+    });
+
+    canvasContainer.style.left = Math.round((windowWidth - stageWidth) / 2) + 'px';
+    canvasContainer.style.top = Math.round(windowHeight / 2) + 'px';
 
     // disable right click context menu over container DIV
-    document.getElementById('container').oncontextmenu = new Function("return false")
+    document.getElementById('container').oncontextmenu = new Function("return false");
 
     initGame();
 
@@ -65,7 +80,6 @@
         this.draw();
     });
 
-
     function InitGrid() {
 
         for (var row = 0; row < rows; row++) {
@@ -90,7 +104,6 @@
         // fill field with empty spaces
         for (var row = 0; row < rows; row++) {
             field[row] = [];
-
             for (var col = 0; col < cols; col++) {
                 field[row][col] = emptyField;
             }
@@ -100,9 +113,9 @@
         var mineNumber = Math.floor(Math.random() * 10) + 10; // setting difficulty (how many mines are there on the field)
         for (var i = 0; i < mineNumber; i++) {
             var x = Math.floor(Math.random() * rows),
-                y = Math.floor(Math.random() * rows);
+                y = Math.floor(Math.random() * cols);
 
-            field[y][x] = mine; // put mine at random position
+            field[x][y] = mine; // put mine at random position
         }
     }
 
@@ -197,6 +210,4 @@
         }
         return isInside;
     }
-
-
 }
