@@ -15,19 +15,24 @@
             height: stageHeight
         }),
         fieldLayer = new Kinetic.Layer(),
-        minesLayer = new Kinetic.Layer();
+        minesLayer = new Kinetic.Layer(),
+        allMineFiled;
 
     // disable right click context menu over container DIV
     document.getElementById('container').oncontextmenu = new Function("return false")
 
-    InitGrid();
-    setMines();
-    setMineNumbers(field); //filling numbers around mines
+    initGame();
 
-    var allMineFields = fieldLayer.get('.field');
+    function initGame() {
+        InitGrid();
+        setMines();
+        setMineNumbers(field); //filling numbers around mines
 
-    stage.add(fieldLayer);
-    stage.add(minesLayer);
+        allMineFields = fieldLayer.get('.field');
+
+        stage.add(fieldLayer);
+        stage.add(minesLayer);
+    }
 
     allMineFields.on('mousedown', function () {
 
@@ -40,6 +45,7 @@
         else if (field[y][x] === mine) {
             drawText(y, x, mine, 'red');
             alert('You died!');
+            initGame();
         }
         else if (field[y][x] !== mine) {
             drawText(y, x, field[y][x], 'white');
@@ -58,6 +64,7 @@
         this.stroke('black');
         this.draw();
     });
+
 
     function InitGrid() {
 
@@ -160,7 +167,7 @@
 
             }
             else if (field[y][x] === " ") {
-                drawText(y, x, 'n', 'red')           
+                drawText(y, x, 'n', 'red')
                 field[y][x] = "n";
                 revealNeighbouringEmptyCells(x, y);
             }
@@ -175,13 +182,17 @@
         revealCell(x + 1, y);
         revealCell(x, y + 1);
         revealCell(x, y - 1);
+        revealCell(x - 1, y - 1);
+        revealCell(x - 1, y + 1);
+        revealCell(x + 1, y - 1);
+        revealCell(x + 1, y + 1);
     };
 
     function isInBounds(x, y) {
-        var isInside=false;
+        var isInside = false;
         if (x >= 0 && x < cols) {
             if (y >= 0 && y < rows) {
-                isInside=true;
+                isInside = true;
             }
         }
         return isInside;
