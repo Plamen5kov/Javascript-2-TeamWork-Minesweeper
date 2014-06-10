@@ -9,6 +9,8 @@
         field = [],
         mine = 'X',
         emptyField = ' ',
+        flagsCount = 10,
+        flagsString = (flagsCount === 1) ? "You have " + flagsCount + " flag left." : "You have " + flagsCount + " flags left.",
 
         windowWidth = window.innerWidth,
         windowHeight = window.innerHeight,
@@ -30,6 +32,7 @@
         opacity: 0.7
     });
 
+
     canvasContainer.style.left = Math.round((windowWidth - stageWidth) / 2) + 'px';
     canvasContainer.style.top = Math.round(windowHeight / 2) + 'px';
 
@@ -42,6 +45,7 @@
         InitGrid();
         setMines();
         setMineNumbers(field); //filling numbers around mines
+        drawInfoBoard();
 
         allMineFields = fieldLayer.get('.field');
 
@@ -180,12 +184,10 @@
 
             }
             else if (field[y][x] === " ") {
-                drawText(y, x, 'n', 'red')
-                field[y][x] = "n";
-                revealNeighbouringEmptyCells(x, y);
+                handleEmptyCell(x, y);
             }
             else {
-                drawText(y, x, field[y][x], 'white');
+                handleTextCell(x, y);
             }
         }
     }
@@ -209,5 +211,43 @@
             }
         }
         return isInside;
+    }
+
+    function drawInfoBoard() {
+        paper.rect(10, 10, 250, 450).attr({
+            stroke: 'darkgrey',
+            fill: 'darkgrey'
+        });
+        paper.text(140, 30, flagsString).attr({
+            stroke: 'black',
+            'stroke-width': 2,
+            'font-family': 'Consolas',
+            'font-size': "18px",
+        });
+
+        paper.image('imgs/2000px-Red_flag_waving.svg_2.png', 100, 50, 100, 100).attr({
+            opacity: 0.7
+        });
+
+        paper.text(140, 230, "And know this - \nif you fail, \nthe kitten DIES!").attr({
+            stroke: 'black',
+            'stroke-width': 2,
+            'font-family': 'Consolas',
+            'font-size': "18px",
+        });
+
+        paper.image('imgs/Cute_Kitten_Cartoon_Free_Clipart.png', 60, 280, 150, 150).attr({
+            opacity: 0.7
+        });
+    }
+
+    function handleEmptyCell(x, y) {
+        drawText(y, x, ' ', 'lightgrey')
+        field[y][x] = "n";
+        revealNeighbouringEmptyCells(x, y);
+    }
+
+    function handleTextCell(x, y) {
+        drawText(y, x, field[y][x], 'white');
     }
 }
