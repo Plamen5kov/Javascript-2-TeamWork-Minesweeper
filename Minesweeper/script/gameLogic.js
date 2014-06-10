@@ -15,8 +15,6 @@
         windowWidth = window.innerWidth,
         windowHeight = window.innerHeight,
 
-        paper = new Raphael("background", windowWidth - 5, windowHeight - 5),
-
         stage = new Kinetic.Stage({
             container: 'container',
             width: stageWidth,
@@ -32,12 +30,13 @@
         opacity: 0.7
     });
 
-
     canvasContainer.style.left = Math.round((windowWidth - stageWidth) / 2) + 'px';
     canvasContainer.style.top = Math.round(windowHeight / 2) + 'px';
 
     // disable right click context menu over container DIV
     document.getElementById('container').oncontextmenu = new Function("return false");
+
+    loadBackground();
 
     initGame();
 

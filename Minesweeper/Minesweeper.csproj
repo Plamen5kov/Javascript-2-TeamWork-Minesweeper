@@ -69,6 +69,7 @@
     <Content Include="imgs\Cute_Kitten_Cartoon_Free_Clipart.png" />
     <Content Include="index.html" />
     <Content Include="imgs\kabum-background.jpg" />
+    <Content Include="script\background.js" />
     <Content Include="script\gameLogic.js" />
     <Content Include="script\kinetic.min.js" />
     <Content Include="script\raphael-min.js" />
