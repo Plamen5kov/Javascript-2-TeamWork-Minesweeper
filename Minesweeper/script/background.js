@@ -21,6 +21,6 @@
         'font-size': 45,
         'stroke-width': 3,
     });
-    paper.text(5 * windowWidth / 6, 100, 'Telerik Academy').attr(settings);
+    paper.text(5 * windowWidth / 6, 90, 'Telerik Academy').attr(settings);
     paper.text(5 * windowWidth / 6, 150, 'Team "Hornbuckle"').attr(settings);
 }
