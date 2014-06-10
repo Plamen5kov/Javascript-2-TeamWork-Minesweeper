@@ -17,10 +17,10 @@
         stroke: '#000000'
     });
 
-    paper.text(windowWidth / 6, 100, 'Telerik Academy').attr(settings);
     paper.text(windowWidth / 2, 200, 'MINESWEEPER').attr(settings).attr({
         'font-size': 45,
         'stroke-width': 3,
     });
-    paper.text(5 * windowWidth / 6, 100, 'Team "Hornbuckle"').attr(settings);   
+    paper.text(5 * windowWidth / 6, 100, 'Telerik Academy').attr(settings);
+    paper.text(5 * windowWidth / 6, 150, 'Team "Hornbuckle"').attr(settings);
 }
