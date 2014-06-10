@@ -10,7 +10,7 @@
         mine = 'X',
         emptyField = ' ',
         flagsCount = 10,
-        flagsString = (flagsCount === 1) ? "You have " + flagsCount + " flag left." : "You have " + flagsCount + " flags left.",
+        flagsString = (flagsCount === 1) ? "You have " + flagsCount + " flag left" : "You have " + flagsCount + " flags left",
 
         windowWidth = window.innerWidth,
         windowHeight = window.innerHeight,
@@ -214,7 +214,7 @@
             stroke: 'darkgrey',
             fill: 'darkgrey'
         });
-        paper.text(140, 30, flagsString).attr({
+        paper.text(130, 30, flagsString).attr({
             stroke: 'black',
             'stroke-width': 2,
             'font-family': 'Consolas',
