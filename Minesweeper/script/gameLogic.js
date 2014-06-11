@@ -48,6 +48,12 @@
         stage.add(minesLayer);
     }
 
+    function playExplosionSound(newAudio) {
+        newAudio = document.createElement('audio');
+        newAudio.src = ('explosion.wav');
+        document.getElementById('container').appendChild(newAudio).play();
+    }
+
     allMineFields.on('mousedown', function () {
 
         var x = this.getX() / fieldSize;
@@ -58,7 +64,8 @@
         }
         else if (field[y][x] === mine) {
             drawText(y, x, mine, 'red');
-            alert('You died!');
+            playExplosionSound();
+            setTimeout(function () { alert("You died!"); location.reload(); }, 1000);
             initGame();
         }
         else if (field[y][x] !== mine) {
