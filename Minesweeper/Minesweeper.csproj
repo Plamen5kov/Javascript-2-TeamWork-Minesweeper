@@ -67,6 +67,7 @@
   <ItemGroup>
     <Content Include="imgs\2000px-Red_flag_waving.svg_2.png" />
     <Content Include="imgs\Cute_Kitten_Cartoon_Free_Clipart.png" />
+    <Content Include="imgs\smilies.png" />
     <Content Include="index.html" />
     <Content Include="imgs\kabum-background.jpg" />
     <Content Include="script\background.js" />

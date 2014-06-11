@@ -10,6 +10,7 @@
         mine = 'X',
         emptyField = ' ',
         flagsCount = 10,
+        smileyOffset = 70,
         flagsString = (flagsCount === 1) ? "You have " + flagsCount + " flag left" : "You have " + flagsCount + " flags left",
 
         windowWidth = window.innerWidth,
@@ -18,21 +19,79 @@
         stage = new Kinetic.Stage({
             container: 'container',
             width: stageWidth,
-            height: stageHeight
+            height: stageHeight + smileyOffset
         }),
 
-        fieldLayer = new Kinetic.Layer(),
-        minesLayer = new Kinetic.Layer(),
+        fieldLayer = new Kinetic.Layer({ y: smileyOffset }),
+        minesLayer = new Kinetic.Layer({ y: smileyOffset }),
+        smileylayer = new Kinetic.Layer(),
         allMineFiled,
-        canvasContainer = document.getElementById('container');
+        canvasContainer = document.getElementById('container'),
+        smileySprite = new Image(),
+        smiley;
 
     canvasContainer.style.left = Math.round((windowWidth - stageWidth) / 2) + 'px';
-    canvasContainer.style.top = Math.round(windowHeight / 2) + 'px';
+    canvasContainer.style.top = Math.round(windowHeight / 2 - smileyOffset) + 'px';
 
     // disable right click context menu over container DIV
     document.getElementById('container').oncontextmenu = new Function("return false");
 
     loadBackground();
+
+    smileySprite.src = 'imgs/smilies.png';
+    smileySprite.onload = function () {
+
+        smiley = new Kinetic.Sprite({
+            x: (stageWidth - smileyOffset) / 2,
+            y: 0,
+            image: smileySprite,
+            animation: 'idle',
+            animations: {
+                // x, y, width, height
+                idle: [
+                    22, 165, 62, 62
+                ],
+                move: [
+                    22, 165, 62, 62,
+                    22, 96, 62, 62,
+                    22, 377, 62, 62,
+                    93, 377, 62, 62,
+                    162, 377, 62, 62,
+                    231, 377, 62, 62,
+                    302, 377, 62, 62,
+                    375, 377, 62, 62,
+                    444, 377, 62, 62,
+                    518, 377, 62, 62,
+                    22, 94, 62, 62,
+                ],
+                dead: [
+                    865, 161, 62, 62
+                ]
+            },
+            frameRate: 25,
+            frameIndex: 0
+        });
+
+        smileylayer.add(smiley);
+        stage.add(smileylayer);
+
+        smiley.start();
+
+        var frameCount = 0;
+        smiley.on('frameIndexChange', function (event) {
+            if (smiley.animation() === 'move' && ++frameCount > 11) {
+                smiley.animation('idle');
+                frameCount = 0;
+
+            } else if (smiley.animation() === 'dead') {
+                frameCount = 0;
+            }
+        });
+
+        smiley.on('mousedown', function () {
+            location.reload();
+        });
+    }
 
     initGame();
 
@@ -56,6 +115,7 @@
 
     allMineFields.on('mousedown', function () {
 
+        smiley.animation('move');
         var x = this.getX() / fieldSize;
         var y = this.getY() / fieldSize;
 
@@ -65,12 +125,14 @@
         else if (field[y][x] === mine) {
             drawText(y, x, mine, 'red');
             playExplosionSound();
-            setTimeout(function () { alert("You died!"); location.reload(); }, 1000);
+            smiley.animation('dead');
             initGame();
         }
         else if (field[y][x] !== mine) {
             drawText(y, x, field[y][x], 'white');
         }
+
+
 
         this.fill('lightgray');
         this.draw();
