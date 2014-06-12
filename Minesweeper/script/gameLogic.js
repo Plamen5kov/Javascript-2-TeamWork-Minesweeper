@@ -109,7 +109,8 @@
 
     function playExplosionSound(newAudio) {
         newAudio = document.createElement('audio');
-        newAudio.src = ('explosion.wav');
+        newAudio.src = ('sounds/explosion1.wav');
+        newAudio.volume = 0.2;
         document.getElementById('container').appendChild(newAudio).play();
     }
 
