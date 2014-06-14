@@ -244,15 +244,15 @@
 
     function revealCell(x, y) {
         if (isInBounds(x, y)) {
-            var cellValue = field[y][x];
+            var cell = allMineFields[(y * cols)+x];
             if (field[y][x] === "n" || field[y][x] === mine) {
 
             }
             else if (field[y][x] === " ") {
-                handleEmptyCell(x, y);
+                handleEmptyCell(x, y, cell);
             }
             else {
-                handleTextCell(x, y);
+                handleTextCell(x, y, cell);
             }
         }
     }
@@ -307,13 +307,20 @@
         });
     }
 
-    function handleEmptyCell(x, y) {
+    function handleEmptyCell(x, y,cell) {
         drawText(y, x, ' ', 'lightgrey')
         field[y][x] = "n";
         revealNeighbouringEmptyCells(x, y);
+        DrawBackground(cell);
     }
 
-    function handleTextCell(x, y) {
+    function handleTextCell(x, y,cell) {
         drawText(y, x, field[y][x], 'white');
+        DrawBackground(cell);
+    }
+
+    function DrawBackground(cell) {
+        cell.fill('lightgray');
+        cell.draw();
     }
 }
