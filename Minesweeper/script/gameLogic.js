@@ -127,6 +127,7 @@
             drawText(y, x, mine, 'red');
             playExplosionSound();
             smiley.animation('dead');
+            revealField();
             initGame();
         }
         else if (field[y][x] !== mine) {
@@ -262,10 +263,6 @@
         revealCell(x + 1, y);
         revealCell(x, y + 1);
         revealCell(x, y - 1);
-        revealCell(x - 1, y - 1);
-        revealCell(x - 1, y + 1);
-        revealCell(x + 1, y - 1);
-        revealCell(x + 1, y + 1);
     };
 
     function isInBounds(x, y) {
@@ -308,7 +305,7 @@
     }
 
     function handleEmptyCell(x, y,cell) {
-        drawText(y, x, ' ', 'lightgrey')
+        drawText(y, x, ' ', 'white')
         field[y][x] = "n";
         revealNeighbouringEmptyCells(x, y);
         DrawBackground(cell);
@@ -322,5 +319,22 @@
     function DrawBackground(cell) {
         cell.fill('lightgray');
         cell.draw();
+    }
+
+    function revealField() {
+        for (var i = 0; i < rows; i += 1) {
+            for (var j = 0; j < cols; j += 1) {
+                if(field[i][j]===mine)
+                {
+                    drawText(i, j, mine, 'red');
+                }
+                else if (field[i][j] === 'n') {
+                    drawText(i, j, ' ', 'white')
+                }
+                else {
+                    drawText(i, j, field[i][j], 'white');
+                }
+            }
+        }
     }
 }
