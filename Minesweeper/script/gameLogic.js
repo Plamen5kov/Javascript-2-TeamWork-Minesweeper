@@ -10,7 +10,7 @@
         mine = 'X',
         emptyField = ' ',
         flagsCount = 10,
-        smileyOffset = 70,
+        smileyOffset = 40,
         flagsString = (flagsCount === 1) ? "You have " + flagsCount + " flag left" : "You have " + flagsCount + " flags left",
 
         windowWidth = window.innerWidth,
@@ -43,35 +43,44 @@
 
         smiley = new Kinetic.Sprite({
             x: (stageWidth - smileyOffset) / 2,
-            y: 0,
+            y: 4,
             image: smileySprite,
             animation: 'idle',
             animations: {
                 // x, y, width, height
                 idle: [
-                    22, 165, 62, 62
+                    10, 82, 32, 32
                 ],
                 move: [
-                    22, 165, 62, 62,
-                    22, 96, 62, 62,
-                    22, 377, 62, 62,
-                    93, 377, 62, 62,
-                    162, 377, 62, 62,
-                    231, 377, 62, 62,
-                    302, 377, 62, 62,
-                    375, 377, 62, 62,
-                    444, 377, 62, 62,
-                    518, 377, 62, 62,
-                    22, 94, 62, 62,
+                    10, 82, 32, 32,
+                    10, 47, 32, 32,
+                    10, 188, 32, 32,
+                    46, 188, 32, 32,
+                    81, 188, 32, 32,
+                    116, 188, 32, 32,
+                    151, 188, 32, 32,
+                    187, 188, 32, 32,
+                    222, 188, 32, 32,
+                    259, 188, 32, 32,
+                    10, 47, 32, 32,
                 ],
                 dead: [
-                    865, 161, 62, 62
+                    433, 82, 32, 32
                 ]
             },
             frameRate: 25,
             frameIndex: 0
         });
 
+        smileyBackground = new Kinetic.Rect({
+            x: 0,
+            y: 0,
+            width: stageWidth,
+            height: smileyOffset,
+            fill: 'gray'
+        });
+
+        smileylayer.add(smileyBackground);
         smileylayer.add(smiley);
         stage.add(smileylayer);
 
@@ -245,7 +254,7 @@
 
     function revealCell(x, y) {
         if (isInBounds(x, y)) {
-            var cell = allMineFields[(y * cols)+x];
+            var cell = allMineFields[(y * cols) + x];
             if (field[y][x] === "n" || field[y][x] === mine) {
 
             }
@@ -304,14 +313,14 @@
         });
     }
 
-    function handleEmptyCell(x, y,cell) {
+    function handleEmptyCell(x, y, cell) {
         drawText(y, x, ' ', 'white')
         field[y][x] = "n";
         revealNeighbouringEmptyCells(x, y);
         DrawBackground(cell);
     }
 
-    function handleTextCell(x, y,cell) {
+    function handleTextCell(x, y, cell) {
         drawText(y, x, field[y][x], 'white');
         DrawBackground(cell);
     }
@@ -324,8 +333,7 @@
     function revealField() {
         for (var i = 0; i < rows; i += 1) {
             for (var j = 0; j < cols; j += 1) {
-                if(field[i][j]===mine)
-                {
+                if (field[i][j] === mine) {
                     drawText(i, j, mine, 'red');
                 }
                 else if (field[i][j] === 'n') {
