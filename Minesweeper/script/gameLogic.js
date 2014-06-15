@@ -36,75 +36,11 @@
     // disable right click context menu over container DIV
     document.getElementById('container').oncontextmenu = new Function("return false");
 
-    loadBackground();
-
-    smileySprite.src = 'imgs/smilies.png';
-    smileySprite.onload = function () {
-
-        smiley = new Kinetic.Sprite({
-            x: (stageWidth - smileyOffset) / 2,
-            y: 4,
-            image: smileySprite,
-            animation: 'idle',
-            animations: {
-                // x, y, width, height
-                idle: [
-                    10, 82, 32, 32
-                ],
-                move: [
-                    10, 82, 32, 32,
-                    10, 47, 32, 32,
-                    10, 188, 32, 32,
-                    46, 188, 32, 32,
-                    81, 188, 32, 32,
-                    116, 188, 32, 32,
-                    151, 188, 32, 32,
-                    187, 188, 32, 32,
-                    222, 188, 32, 32,
-                    259, 188, 32, 32,
-                    10, 47, 32, 32,
-                ],
-                dead: [
-                    433, 82, 32, 32
-                ]
-            },
-            frameRate: 25,
-            frameIndex: 0
-        });
-
-        smileyBackground = new Kinetic.Rect({
-            x: 0,
-            y: 0,
-            width: stageWidth,
-            height: smileyOffset,
-            fill: 'gray'
-        });
-
-        smileylayer.add(smileyBackground);
-        smileylayer.add(smiley);
-        stage.add(smileylayer);
-
-        smiley.start();
-
-        var frameCount = 0;
-        smiley.on('frameIndexChange', function (event) {
-            if (smiley.animation() === 'move' && ++frameCount > 11) {
-                smiley.animation('idle');
-                frameCount = 0;
-
-            } else if (smiley.animation() === 'dead') {
-                frameCount = 0;
-            }
-        });
-
-        smiley.on('mousedown', function () {
-            location.reload();
-        });
-    }
-
     initGame();
 
     function initGame() {
+        loadSmiley();
+        loadBackground();
         InitGrid();
         setMines();
         setMineNumbers(field); //filling numbers around mines
@@ -114,6 +50,73 @@
 
         stage.add(fieldLayer);
         stage.add(minesLayer);
+    }
+
+    function loadSmiley() {
+
+        smileySprite.src = 'imgs/smilies.png';
+        smileySprite.onload = function () {
+
+            smiley = new Kinetic.Sprite({
+                x: (stageWidth - smileyOffset) / 2,
+                y: 4,
+                image: smileySprite,
+                animation: 'idle',
+                animations: {
+                    // x, y, width, height
+                    idle: [
+                        10, 82, 32, 32
+                    ],
+                    move: [
+                        10, 82, 32, 32,
+                        10, 47, 32, 32,
+                        10, 188, 32, 32,
+                        46, 188, 32, 32,
+                        81, 188, 32, 32,
+                        116, 188, 32, 32,
+                        151, 188, 32, 32,
+                        187, 188, 32, 32,
+                        222, 188, 32, 32,
+                        259, 188, 32, 32,
+                        10, 47, 32, 32,
+                    ],
+                    dead: [
+                        433, 82, 32, 32
+                    ]
+                },
+                frameRate: 25,
+                frameIndex: 0
+            });
+
+            smileyBackground = new Kinetic.Rect({
+                x: 0,
+                y: 0,
+                width: stageWidth,
+                height: smileyOffset,
+                fill: 'gray'
+            });
+
+            smileylayer.add(smileyBackground);
+            smileylayer.add(smiley);
+            stage.add(smileylayer);
+
+            smiley.start();
+
+            var frameCount = 0;
+            smiley.on('frameIndexChange', function (event) {
+                if (smiley.animation() === 'move' && ++frameCount > 11) {
+                    smiley.animation('idle');
+                    frameCount = 0;
+
+                } else if (smiley.animation() === 'dead') {
+                    frameCount = 0;
+                }
+            });
+
+            smiley.on('mousedown', function () {
+                location.reload();
+            });
+        }
     }
 
     function playExplosionSound(newAudio) {
